@@ -1,11 +1,12 @@
-using AutoMapper;
-using MediatR;
-using Movies.API.Application.Movie.Commmand;
-using Movies.API.Domain.Repository;
-
 namespace Movies.API.Application.Movie.Handler;
 
-public class AddMovieHandler : IRequestHandler<AddMovieCommand, Domain.Entity.Movies>
+using AutoMapper;
+using MediatR;
+using Commmand;
+using Domain.Repository;
+using Domain.Entity;
+
+public class AddMovieHandler : IRequestHandler<AddMovieCommand, Movie>
 {
 
     private readonly IMapper _mapper;
@@ -17,9 +18,9 @@ public class AddMovieHandler : IRequestHandler<AddMovieCommand, Domain.Entity.Mo
         _repository = repository;
     }
 
-    public Task<Domain.Entity.Movies> Handle(AddMovieCommand request, CancellationToken cancellationToken)
+    public Task<Movie> Handle(AddMovieCommand request, CancellationToken cancellationToken)
     {
-        Domain.Entity.Movies movie = _mapper.Map<Domain.Entity.Movies>(request);
+        Movie movie = _mapper.Map<Movie>(request);
         return _repository.AddAsync(movie);
     }
 }

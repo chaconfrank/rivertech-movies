@@ -1,6 +1,6 @@
 namespace Movies.API.Domain.Repository;
 
-public interface IMoviesRepository: IBaseRepository<Entity.Movies>
+public interface IMoviesRepository: IBaseRepository<Entity.Movie>
 {
     
 }

@@ -4,7 +4,6 @@ using Movies.API.Application.Movie.Mapper;
 using Movies.API.Domain.Repository;
 using Movies.API.Infraestructure;
 using Movies.API.Infraestructure.Repository;
-using Movies.Infraestructure.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,7 +17,7 @@ builder.Services.AddMediatR(typeof(Program));
 
 builder.Services.AddDbContext<Context>(opt 
     => opt.UseInMemoryDatabase("MoviesDb"));  
-builder.Services.AddScoped<IMoviesRepository, MoviesRepository>();
+builder.Services.AddTransient<IMoviesRepository, MoviesRepository>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

@@ -1,8 +1,7 @@
-namespace Movies.API.Domain.Entity;
+namespace Movies.API.Application.Movie.Dto;
 
-public class Movies
+public class UpdateMovieDto
 {
-    public long Id { get; set; }
     public string? Key { get; set; }
     public string? Name { get; set; }
     public string? Description { get; set; }

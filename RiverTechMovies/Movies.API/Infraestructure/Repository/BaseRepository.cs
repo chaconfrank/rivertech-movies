@@ -1,8 +1,8 @@
+namespace Movies.API.Infraestructure.Repository;
+
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using Movies.API.Domain.Repository;
-
-namespace Movies.Infraestructure.Repository;
 
 public class BaseRepository<TEntity, TContext> : IBaseRepository<TEntity>
     where TEntity : class
@@ -52,7 +52,7 @@ public class BaseRepository<TEntity, TContext> : IBaseRepository<TEntity>
         return await _context.Set<TEntity>().AsQueryable().ToListAsync();
     }
 
-    public async Task<TEntity?> GetAsync(object? id)
+    public async Task<TEntity> GetAsync(object? id)
     {
         return await _context.Set<TEntity>().FindAsync(id);
     }

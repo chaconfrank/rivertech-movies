@@ -1,10 +1,8 @@
-namespace Movies.API.Application.Movie.Commmand;
+namespace Movies.API.Domain.Entity;
 
-using Domain.Entity;
-using MediatR;
-
-public class AddMovieCommand : IRequest<Movie>
+public class Movie
 {
+    public long Id { get; set; }
     public string? Key { get; set; }
     public string? Name { get; set; }
     public string? Description { get; set; }

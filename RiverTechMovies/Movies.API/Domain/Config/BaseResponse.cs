@@ -5,10 +5,10 @@ namespace Movies.API.Domain.Config;
 
 public class BaseResponse
 {
-    public string? Message { get; private set; }
-    public bool Successful { get; private set; }
+    public string? Message { get; }
+    public bool Successful { get; }
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    public object? Info { get; private set; }
+    public object? Info { get; }
 
     public BaseResponse()
     {
