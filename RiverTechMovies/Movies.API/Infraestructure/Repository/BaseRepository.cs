@@ -1,15 +1,19 @@
+using Orleans;
+using Orleans.Runtime;
+
 namespace Movies.API.Infraestructure.Repository;
 
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using Movies.API.Domain.Repository;
 
-public class BaseRepository<TEntity, TContext> : IBaseRepository<TEntity>
+public class BaseRepository<TEntity, TContext> : Grain, IBaseRepository<TEntity>
     where TEntity : class
     where TContext : DbContext
 {
 
     private readonly TContext _context;
+    private IBaseRepository<TEntity> _baseRepositoryImplementation;
 
     public BaseRepository(TContext context)
     {
@@ -70,4 +74,6 @@ public class BaseRepository<TEntity, TContext> : IBaseRepository<TEntity>
         return entity;
         
     }
+
+    
 }

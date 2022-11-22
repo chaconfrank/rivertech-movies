@@ -11,7 +11,7 @@ public class Context : DbContext
         optionsBuilder.UseInMemoryDatabase(databaseName: "MoviesDb");
     }
     
-    public DbSet<Domain.Entity.Movie> Authors { get; set; }
+    public DbSet<Domain.Entity.Movie> Movies { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {

@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Movies.API.Application.Movie.Mapper;
 using Movies.API.Domain.Repository;
 using Movies.API.Infraestructure;
+using Movies.API.Infraestructure.GraphQL;
 using Movies.API.Infraestructure.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,12 +13,14 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddAutoMapper(typeof(MovieMapper));
 builder.Services.AddMediatR(typeof(Program));
+builder.Services.AddGraphQLServer().AddQueryType<QueryMovie>();
+
 
 // Service repository
 
 builder.Services.AddDbContext<Context>(opt 
     => opt.UseInMemoryDatabase("MoviesDb"));  
-builder.Services.AddTransient<IMoviesRepository, MoviesRepository>();
+builder.Services.AddScoped<IMoviesRepository, MoviesRepository>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -33,9 +36,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
-
 app.MapControllers();
-
+app.MapGraphQL("/graphql");
 app.Run();

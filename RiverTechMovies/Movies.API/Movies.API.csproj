@@ -7,14 +7,23 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="AutoMapper" Version="12.0.0" />
-      <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
-      <PackageReference Include="FluentValidation.AspNetCore" Version="11.2.2" />
-      <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.3.0" />
-      <PackageReference Include="Mediator.Net.MicrosoftDependencyInjection" Version="4.7.0" />
-      <PackageReference Include="MediatR" Version="11.0.0" />
-      <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
-      <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="7.0.0" />
+        <PackageReference Include="AutoMapper" Version="12.0.0" />
+        <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
+        <PackageReference Include="FluentValidation.AspNetCore" Version="11.2.2" />
+        <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.3.0" />
+        <PackageReference Include="GraphQL.Server.Transports.AspNetCore" Version="5.0.2" />
+        <PackageReference Include="HotChocolate.AspNetCore" Version="12.15.2" />
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.1.5" />
+        <PackageReference Include="Mediator.Net.MicrosoftDependencyInjection" Version="4.7.0" />
+        <PackageReference Include="MediatR" Version="11.0.0" />
+        <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="7.0.0" />
+        <PackageReference Include="Microsoft.Orleans.CodeGenerator.MSBuild" Version="3.6.5">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
+      <PackageReference Include="Microsoft.Orleans.Core" Version="3.6.5" />
+      <PackageReference Include="Microsoft.Orleans.Server" Version="3.6.5" />
       <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
       <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="6.4.0" />
       <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="6.4.0" />
