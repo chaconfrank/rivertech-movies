@@ -1,0 +1,18 @@
+version: '3.7'
+
+services:
+
+  # Database - Mongo DB
+  mongodb:
+    image: mongo:latest
+    restart: on-failure   
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./mongo-init/:/docker-entrypoint-initdb.d/:ro
+    
+volumes:
+  mongodb-data:
+    driver: local
+  mongodb-log:
+    driver: local
