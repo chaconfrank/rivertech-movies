@@ -1,5 +1,3 @@
-using Orleans;
-
 namespace Movies.API.Application.Movie.Handler;
 
 using AutoMapper;
@@ -12,9 +10,9 @@ public class AddMovieHandler : IRequestHandler<AddMovieCommand, Movie>
 {
 
     private readonly IMapper _mapper;
-    private readonly IMoviesRepository _repository;
+    private readonly IMovieRepository _repository;
 
-    public AddMovieHandler(IMapper mapper, IMoviesRepository repository)
+    public AddMovieHandler(IMapper mapper, IMovieRepository repository)
     {
         _mapper = mapper;
         _repository = repository;
@@ -23,6 +21,6 @@ public class AddMovieHandler : IRequestHandler<AddMovieCommand, Movie>
     public Task<Movie> Handle(AddMovieCommand request, CancellationToken cancellationToken)
     {
         Movie movie = _mapper.Map<Movie>(request);
-        return _repository.AddAsync(movie);
+        return _repository.Add(movie);
     }
 }

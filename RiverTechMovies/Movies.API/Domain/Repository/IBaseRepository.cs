@@ -1,19 +1,12 @@
+using MongoDB.Bson;
 using Movies.API.Domain.Entity;
-using Orleans;
-using Orleans.Runtime;
-using Orleans.Storage;
 
 namespace Movies.API.Domain.Repository;
 
-using System.Linq.Expressions;
-
-public interface IBaseRepository<T> where T : class 
+public interface IBaseRepository<TDocument> where TDocument : IDocument 
 {
-    Task<T> AddAsync(T entity);
-    Task<T> UpdateAsync(T entity);
-    Task<T?> DeleteAsync(object id);
-    Task<T> DeleteAsync(T entity);
-    Task<T> GetAsync(object? id);
-    Task<List<T>> GetAllAsync();
-    Task<List<T>> GetFilteredAsync(Expression<Func<T, bool>> filter);
+    Task<TDocument> AddAsync(TDocument entity);
+    Task<TDocument> UpdateAsync(TDocument entity);
+    Task<TDocument> GetAsync(ObjectId id);
+    Task<IEnumerable<Movie>> GetAllAsync();
 }

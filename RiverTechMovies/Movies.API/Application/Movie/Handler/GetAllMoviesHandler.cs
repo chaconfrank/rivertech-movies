@@ -7,15 +7,15 @@ using MediatR;
 
 public class GetAllMoviesHandler : IRequestHandler<GetAllMoviesQuery, List<Movie>>
 {
-    private readonly IMoviesRepository _repository;
+    private readonly IMovieRepository _repository;
 
-    public GetAllMoviesHandler(IMoviesRepository repository)
+    public GetAllMoviesHandler(IMovieRepository repository)
     {
         _repository = repository;
     }
 
     public Task<List<Movie>> Handle(GetAllMoviesQuery request, CancellationToken cancellationToken)
     {
-        return _repository.GetAllAsync();
+        return _repository.GetAll();
     }
 }

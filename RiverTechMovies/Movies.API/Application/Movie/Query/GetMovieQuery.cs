@@ -5,5 +5,5 @@ using Domain.Entity;
 
 public class GetMovieQuery : IRequest<Movie>
 {
-    public long id { get; set; }
+    public string id { get; set; }
 }

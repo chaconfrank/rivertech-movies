@@ -1,6 +1,13 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
+using MongoDB.Bson;
+using MongoDB.Driver;
+using MongoDB.Driver.Core.Events;
 using Movies.API.Application.Movie.Mapper;
+using Movies.API.Domain.Config;
+using Movies.API.Domain.Context;
+using Movies.API.Domain.Entity;
 using Movies.API.Domain.Repository;
 using Movies.API.Infraestructure;
 using Movies.API.Infraestructure.GraphQL;
@@ -13,14 +20,46 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddAutoMapper(typeof(MovieMapper));
 builder.Services.AddMediatR(typeof(Program));
-builder.Services.AddGraphQLServer().AddQueryType<QueryMovie>();
 
 
 // Service repository
+builder.Services.Configure<DatabaseSettings>(builder.Configuration.GetSection("MongoConnection"));
 
-builder.Services.AddDbContext<Context>(opt 
-    => opt.UseInMemoryDatabase("MoviesDb"));  
-builder.Services.AddScoped<IMoviesRepository, MoviesRepository>();
+builder.Services.AddSingleton(serviceProvider =>
+    serviceProvider.GetRequiredService<IOptions<DatabaseSettings>>().Value);
+
+// Repositories
+builder.Services.AddSingleton<ICatalogContext, MongoContext>();
+builder.Services.AddScoped<IMovieRepository, MovieRepository>();
+
+// GraphQL
+builder.Services
+    .AddSingleton(sp =>
+    {
+        DatabaseSettings? mongoDbConfiguration = null;
+        
+        var mongoConnectionUrl = new MongoUrl(mongoDbConfiguration?.ConnectionString);
+        var mongoClientSettings = MongoClientSettings.FromUrl(mongoConnectionUrl);
+        mongoClientSettings.ClusterConfigurator = cb =>
+        {
+            // This will print the executed command to the console
+            cb.Subscribe<CommandStartedEvent>(e =>
+            {
+                Console.WriteLine($"{e.CommandName} - {e.Command.ToJson()}");
+            });
+        };
+        var client = new MongoClient(mongoClientSettings);
+        var database = client.GetDatabase(mongoDbConfiguration?.DatabaseName);
+        return database.GetCollection<Movie>("movies");
+    })
+    .AddGraphQLServer()
+    .AddQueryType<QueryMovie>()
+    .AddGlobalObjectIdentification()
+    .AddMongoDbFiltering()
+    .AddMongoDbSorting()
+    .AddMongoDbProjections()
+    .AddMongoDbPagingProviders();
+
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

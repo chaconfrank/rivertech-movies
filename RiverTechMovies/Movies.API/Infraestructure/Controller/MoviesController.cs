@@ -40,7 +40,7 @@ public class MoviesController : ApiControllerBase
         Movie movie = await CommandAsync(addMovieCommand);
         
         string urlBase = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host.ToUriComponent()}";
-        string locationUri = $"{urlBase}/{RoutesPath.Movies.Get}/{movie.Id}";
+        string locationUri = $"{urlBase}/{RoutesPath.Movies.Get.Replace("{id}", movie._id)}";
         
         return Created(locationUri, movie);
     }
@@ -59,7 +59,7 @@ public class MoviesController : ApiControllerBase
     [ProducesResponseType(typeof(BaseResponse), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(BaseResponse), StatusCodes.Status500InternalServerError)]
     [HttpPut(RoutesPath.Movies.Update)]
-    public async Task<IActionResult> Update(long id, UpdateMovieDto updateMovieDto) 
+    public async Task<IActionResult> Update(string id, UpdateMovieDto updateMovieDto) 
     {
         Movie movie = await QueryAsync(new GetMovieQuery() { id = id });
         
@@ -82,7 +82,7 @@ public class MoviesController : ApiControllerBase
     [ProducesResponseType(typeof(BaseResponse), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(BaseResponse), StatusCodes.Status500InternalServerError)]
     [HttpGet(RoutesPath.Movies.Get)]
-    public async Task<IActionResult> Get(long id)
+    public async Task<IActionResult> Get(string id)
     {
         Movie movie = await QueryAsync(new GetMovieQuery() { id = id });
         return Ok(movie);
